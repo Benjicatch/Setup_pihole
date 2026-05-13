@@ -1,0 +1,5 @@
+.vagrant
+.vscode
+*.log
+# install-dependencies.sh
+# Vagrantfile

@@ -1,0 +1,7 @@
+- name: Install Pi-hole
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Docker
+      include_role:
+        name: docker_installation
