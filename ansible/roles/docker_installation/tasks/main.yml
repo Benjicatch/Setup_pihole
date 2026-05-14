@@ -40,7 +40,7 @@
 - name: Install Docker and Docker Compose
   ansible.builtin.package:
     name:
-      - docker-ce
+      - docker.io
       - docker-ce-cli
       - containerd.io
       - docker-buildx-plugin
