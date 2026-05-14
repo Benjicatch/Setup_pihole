@@ -41,6 +41,7 @@
   ansible.builtin.package:
     name:
       - docker.io
+      - docker-compose
     state: present
 
 - name: Ensure Docker service is enabled and started
