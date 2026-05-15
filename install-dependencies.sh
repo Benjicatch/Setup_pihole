@@ -4,7 +4,7 @@ apt-get update
 # Setup github for cloning repositories
 apt-get install -y git
 
-ssh-keyscan github.com >> /home/vagrant/.ssh/known_hosts
+ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 apt-get install -y ansible
 
