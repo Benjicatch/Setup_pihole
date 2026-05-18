@@ -1,3 +1,5 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for ansible/roles/tailscale_installation
+version:
+  "Ubuntu 22.04": "ubuntu/jammy.noarmor.gpg"
