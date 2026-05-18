@@ -35,4 +35,3 @@
   ansible.builtin.package:
     name: tailscale
     state: present
-  update_cache: yes
