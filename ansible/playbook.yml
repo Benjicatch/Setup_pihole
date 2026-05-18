@@ -5,3 +5,7 @@
     - name: Install Docker
       include_role:
         name: docker_installation
+
+    - name: Install Tailscale
+      include_role:
+        name: tailscale_installation
