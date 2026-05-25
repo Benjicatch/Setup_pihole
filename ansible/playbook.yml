@@ -1,11 +1,16 @@
+---
 - name: Install Pi-hole
   hosts: all
   become: true
   tasks:
     - name: Install Docker
-      include_role:
+      ansible.builtin.include_role:
         name: docker_installation
 
     - name: Install Tailscale
-      include_role:
+      ansible.builtin.include_role:
         name: tailscale_installation
+
+    - name: Install Pi-hole
+      ansible.builtin.include_role:
+        name: pihole_installation

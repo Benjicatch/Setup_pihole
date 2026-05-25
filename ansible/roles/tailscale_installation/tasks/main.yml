@@ -3,7 +3,7 @@
 # tasks file for ansible/roles/tailscale_installation
 - name: Update apt cache
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Ensure dependencies are installed
   ansible.builtin.package:
@@ -23,13 +23,14 @@
 
 - name: Add Tailscale repository to Apt sources
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/tailscale-keyring.gpg] https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/tailscale-keyring.gpg] https://pkgs.tailscale.com/stable/{{ ansible_distribution
+      | lower }} {{ ansible_distribution_release }} main"
     state: present
     filename: tailscale
 
 - name: Update apt cache after adding Tailscale repository
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Install Tailscale
   ansible.builtin.package:

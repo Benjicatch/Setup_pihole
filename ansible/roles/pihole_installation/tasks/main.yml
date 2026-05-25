@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible/roles/pihole_installation
+- name: Copy docker compose of Pi-Hole
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /tmp/docker-compose.yml
+    mode: "0755"
+  register: file_copy_result
+
+- name: Run pihole
+  community.docker.docker_compose_v2:
+    project_src: /tmp/
+    state: present
+  register: output
+  when: file_copy_result.changed
+
+- name: Show results
+  ansible.builtin.debug:
+    var: output
+  when: file_copy_result.changed
