@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
 
   # Install dependencies
   config.ssh.forward_agent = true
+  config.vm.provision "file", source: ".password", destination: "$HOME/.password"
   config.vm.provision "shell", name: "install-dependencies", path: "install-dependencies.sh"
 
   # Disable automatic box update checking. If you disable this, then

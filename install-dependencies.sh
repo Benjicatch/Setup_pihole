@@ -23,4 +23,4 @@ git fetch origin
 git checkout dev
 git pull origin dev
 
-ansible-playbook -i "localhost," -c local ./ansible/playbook.yml
+ansible-playbook -i "localhost," -c local ./ansible/playbook.yml --vault-password-file /home/vagrant/.password
