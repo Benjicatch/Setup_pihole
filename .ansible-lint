@@ -24,6 +24,7 @@ enable_list:
   - yaml
   - fqcn
   - name[casing]
+  - var-naming[no-role-prefix]
 
 write_list:
   - all
