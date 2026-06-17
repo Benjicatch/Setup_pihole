@@ -11,4 +11,3 @@
   #       msg: "{{ lookup('env','roles_path') }}"
   roles:
     - role: docker_installation
-

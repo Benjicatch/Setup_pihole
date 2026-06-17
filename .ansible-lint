@@ -8,7 +8,9 @@ exclude_paths:
   - tests/
   - .yamllint
 
-skip_list: []
+skip_list:
+  - var-naming[no-role-prefix]
+
 warn_list:
   - experimental
   - role-name
@@ -24,7 +26,6 @@ enable_list:
   - yaml
   - fqcn
   - name[casing]
-  - var-naming[no-role-prefix]
 
 write_list:
   - all

@@ -36,8 +36,10 @@
 
 - name: Set Docker architecture fact
   ansible.builtin.set_fact:
-    docker_arch: "{{ 'amd64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' if ansible_facts['architecture'] ==
-      'aarch64' else ansible_facts['architecture'] }}"
+    docker_arch: >-
+      {{ 'amd64' if ansible_facts['architecture'] == 'x86_64'
+      else 'arm64' if ansible_facts['architecture'] == 'aarch64'
+      else ansible_facts['architecture'] }}
 
 - name: Add Docker repository to Apt sources
   ansible.builtin.deb822_repository:
