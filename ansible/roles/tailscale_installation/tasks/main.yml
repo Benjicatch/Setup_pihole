@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: MIT-0
 ---
 # tasks file for ansible/roles/tailscale_installation
-- name: Update apt cache
+- name: Ensure python3-debian is installed (APT modules requirement)
   ansible.builtin.apt:
+    name: python3-debian
+    state: present
     update_cache: true
+    cache_valid_time: 3600
 
 - name: Ensure dependencies are installed
   ansible.builtin.package:
@@ -15,28 +18,58 @@
       - ca-certificates
     state: present
 
+- name: Check if Tailscale GPG key exists
+  ansible.builtin.stat:
+    path: /usr/share/keyrings/tailscale-archive-keyring.gpg
+  register: tailscale_key
+
 - name: Download Tailscale's official GPG key
-  ansible.builtin.get_url:
+  ansible.builtin.uri:
     url: >-
       https://pkgs.tailscale.com/stable/{{ version[ansible_facts['distribution'] +
       ' ' + ansible_facts['distribution_version']] }}
-    dest: /usr/share/keyrings/tailscale-keyring.gpg
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
     mode: "0644"
+  when: not tailscale_key.stat.exists
 
-- name: Add Tailscale repository to Apt sources
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [signed-by=/usr/share/keyrings/tailscale-keyring.gpg]
-      https://pkgs.tailscale.com/stable/ {{ ansible_facts['distribution'] | lower }}
-      {{ ansible_facts['distribution_release'] }} main
-    state: present
-    filename: tailscale
+- name: Check if Tailscale repository exists
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/tailscale.list
+  register: tailscale_repo
 
-- name: Update apt cache after adding Tailscale repository
+- name: Add Tailscale repository
+  ansible.builtin.uri:
+    dest: /etc/apt/sources.list.d/tailscale.list
+    url: >-
+      https://pkgs.tailscale.com/stable/{{ repo_version[ansible_facts['distribution'] +
+      ' ' + ansible_facts['distribution_version']] }}
+    mode: "0644"
+  when: not tailscale_repo.stat.exists
+
+- name: Update apt cache after adding Tailscale repo
   ansible.builtin.apt:
     update_cache: true
+  when: not tailscale_repo.stat.exists
 
 - name: Install Tailscale
   ansible.builtin.package:
     name: tailscale
     state: present
+
+- name: Check Tailscale status
+  ansible.builtin.command:
+    cmd: tailscale status --json
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+
+- name: Make sure a Tailscale is running
+  ansible.builtin.systemd_service:
+    state: started
+    name: tailscaled
+
+- name: Log Tailscale
+  ansible.builtin.command:
+    cmd: tailscale up --auth-key=tskey-auth-kjTz8moATg11CNTRL-qq8DnAUWPgWACmmGdYzufWXPLYB13TcX
+  when: tailscale_status.rc != 0
+  # no_log: true

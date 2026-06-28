@@ -1,0 +1,26 @@
+---
+# Purpose: assert that the instance really ended up in the expected state.
+# Molecule calls this playbook with `molecule verify`.
+- name: Verify
+  hosts: instance
+  gather_facts: true # Quicker, if you do not need facts
+  tasks:
+    - name: Check Tailscale is installed
+      ansible.builtin.command: tailscale --version
+      register: tailscale_version
+      changed_when: false
+
+    - name: Assert Tailscale version exists
+      ansible.builtin.assert:
+        that:
+          - tailscale_version.rc == 0
+
+    - name: Check Tailscale status
+      ansible.builtin.command: tailscale status
+      register: tailscale_status
+      changed_when: false
+
+    - name: Assert Tailscale is running
+      ansible.builtin.assert:
+        that:
+          - tailscale_status.rc == 0
