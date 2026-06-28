@@ -21,7 +21,7 @@
 - name: Check if Tailscale GPG key exists
   ansible.builtin.stat:
     path: /usr/share/keyrings/tailscale-archive-keyring.gpg
-  register: tailscale_key
+  register: tailscale_gpg
 
 - name: Download Tailscale's official GPG key
   ansible.builtin.uri:
@@ -30,7 +30,7 @@
       ' ' + ansible_facts['distribution_version']] }}
     dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
     mode: "0644"
-  when: not tailscale_key.stat.exists
+  when: not tailscale_gpg.stat.exists
 
 - name: Check if Tailscale repository exists
   ansible.builtin.stat:
@@ -70,6 +70,6 @@
 
 - name: Log Tailscale
   ansible.builtin.command:
-    cmd: tailscale up --auth-key=tskey-auth-kjTz8moATg11CNTRL-qq8DnAUWPgWACmmGdYzufWXPLYB13TcX
+    cmd: "tailscale up --auth-key={{ tailscale_key }}"
   when: tailscale_status.rc != 0
   # no_log: true

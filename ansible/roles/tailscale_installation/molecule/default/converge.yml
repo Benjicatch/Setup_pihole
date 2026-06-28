@@ -4,10 +4,8 @@
 - name: Converge
   hosts: all
   become: true
+  vars_files:
+    - ../../../../inventory/group_vars/all/vault.yml
   gather_facts: true # Disable if your role does not rely on facts
-  # tasks:
-  #   - name: debug role path
-  #     debug:
-  #       msg: "{{ lookup('env','roles_path') }}"
   roles:
     - role: tailscale_installation

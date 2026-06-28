@@ -28,10 +28,10 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/..
+    ANSIBLE_VAULT_PASSWORD_FILE: "${MOLECULE_PROJECT_DIRECTORY}/../../../.vault_password"
   config_options:
     defaults:
       callback_enabled: profile_tasks
-      # ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/..
 
 verifier:
   name: ansible
