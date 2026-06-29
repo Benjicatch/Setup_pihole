@@ -2,15 +2,10 @@
 - name: Install Pi-hole
   hosts: all
   become: true
-  tasks:
-    - name: Install Docker
-      ansible.builtin.include_role:
-        name: docker_installation
-
-    - name: Install Tailscale
-      ansible.builtin.include_role:
-        name: tailscale_installation
-
-    - name: Install Pi-hole
-      ansible.builtin.include_role:
-        name: pihole_installation
+  vars_files:
+    - ./ansible/inventory/group_vars/all/vault.yml
+  gather_facts: true
+  roles:
+    - docker_installation
+    - tailscale_installation
+    - pihole_installation
