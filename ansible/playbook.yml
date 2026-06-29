@@ -2,8 +2,8 @@
 - name: Install Pi-hole
   hosts: all
   become: true
-  # vars_files:
-  #   - ./inventory/group_vars/all/vault.yml
+  vars_files:
+    - inventory/group_vars/all/vault.yml
   gather_facts: true
   roles:
     - docker_installation
