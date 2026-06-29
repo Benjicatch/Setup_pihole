@@ -32,4 +32,4 @@ git pull origin dev
 
 cd ansible
 ansible-galaxy install -r ./requirements.yml
-ansible-playbook -i "localhost," -c local ./playbook.yml --vault-password-file /home/vagrant/.password
+ansible-playbook -i "localhost," -c local ./playbook.yml --vault-password-file /home/vagrant/.vault_password
