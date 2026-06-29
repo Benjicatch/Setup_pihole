@@ -5,3 +5,4 @@
 # Vagrantfile
 .vault_password
 .password
+docker-compose1.yml.j2

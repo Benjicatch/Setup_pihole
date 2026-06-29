@@ -1,6 +1,6 @@
 # Update package list
 apt-get update
-apt-get install python3.6
+apt-get install -y python3.6
 python -m ensurepip --upgrade
 
 
@@ -30,4 +30,5 @@ git fetch origin
 git checkout dev
 git pull origin dev
 
+ansible-galaxy install -r ./ansible/requirements.yml
 ansible-playbook -i "localhost," -c local ./ansible/playbook.yml --vault-password-file /home/vagrant/.password
