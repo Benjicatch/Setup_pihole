@@ -30,5 +30,6 @@ git fetch origin
 git checkout dev
 git pull origin dev
 
-ansible-galaxy install -r ./ansible/requirements.yml
-ansible-playbook -i "localhost," -c local ./ansible/playbook.yml --vault-password-file /home/vagrant/.password
+cd ansible
+ansible-galaxy install -r ./requirements.yml
+ansible-playbook -i "localhost," -c local ./playbook.yml --vault-password-file /home/vagrant/.password
