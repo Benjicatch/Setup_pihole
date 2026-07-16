@@ -74,3 +74,8 @@
     cmd: "tailscale up --auth-key={{ tailscale_key }}"
   when: tailscale_status.rc != 0
   no_log: true
+
+- name: Remove DNS settings from Tailscale
+  ansible.builtin.command:
+    cmd: "tailscale set --accept-dns=false"
+  when: tailscale_status.rc != 0
