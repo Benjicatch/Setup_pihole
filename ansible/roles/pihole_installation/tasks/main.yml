@@ -6,7 +6,7 @@
 
 - name: Create directories for Pi-Hole
   ansible.builtin.file:
-    path: { { item: !!null "" }: !!null "" }
+    path: "{{ item }}"
     state: directory
     mode: "0755"
   loop:
