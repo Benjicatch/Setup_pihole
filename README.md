@@ -100,7 +100,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/Benjicatch/Setup_pihole.git
-cd your-repository
+cd Setup_pihole
 ```
 
 ---
