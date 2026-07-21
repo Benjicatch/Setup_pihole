@@ -1,0 +1,47 @@
+---
+# Purpose: assert that the instance really ended up in the expected state.
+# Molecule calls this playbook with `molecule verify`.
+- name: Verify
+  hosts: instance
+  gather_facts: true # Quicker, if you do not need facts
+  tasks:
+    - name: Check Docker is installed
+      ansible.builtin.command: docker --version
+      register: docker_version
+      changed_when: false
+
+    - name: Assert Docker version exists
+      ansible.builtin.assert:
+        that:
+          - docker_version.rc == 0
+          - "'Docker version' in docker_version.stdout"
+
+    - name: Check Docker service is running
+      ansible.builtin.command: systemctl is-active docker
+      register: docker_service
+      changed_when: false
+
+    - name: Assert Docker service is active
+      ansible.builtin.assert:
+        that:
+          - docker_service.stdout == "active"
+
+    - name: Check Docker Compose plugin
+      ansible.builtin.command: docker compose version
+      register: compose_version
+      changed_when: false
+
+    - name: Assert Docker Compose works
+      ansible.builtin.assert:
+        that:
+          - compose_version.rc == 0
+
+    - name: Check Docker daemon is reachable
+      ansible.builtin.command: docker info
+      register: docker_info
+      changed_when: false
+
+    - name: Assert Docker daemon is reachable
+      ansible.builtin.assert:
+        that:
+          - docker_info.rc == 0

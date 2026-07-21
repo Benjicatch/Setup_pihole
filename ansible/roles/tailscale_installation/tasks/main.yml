@@ -1,0 +1,81 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible/roles/tailscale_installation
+- name: Ensure python3-debian is installed (APT modules requirement)
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Ensure dependencies are installed
+  ansible.builtin.package:
+    name:
+      - bc
+      - curl
+      - expect
+      - git
+      - ca-certificates
+    state: present
+
+- name: Check if Tailscale GPG key exists
+  ansible.builtin.stat:
+    path: /usr/share/keyrings/tailscale-archive-keyring.gpg
+  register: tailscale_gpg
+
+- name: Download Tailscale's official GPG key
+  ansible.builtin.uri:
+    url: >-
+      https://pkgs.tailscale.com/stable/{{ version[ansible_facts['distribution'] +
+      ' ' + ansible_facts['distribution_version']] }}
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    mode: "0644"
+  when: not tailscale_gpg.stat.exists
+
+- name: Check if Tailscale repository exists
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/tailscale.list
+  register: tailscale_repo
+
+- name: Add Tailscale repository
+  ansible.builtin.uri:
+    dest: /etc/apt/sources.list.d/tailscale.list
+    url: >-
+      https://pkgs.tailscale.com/stable/{{ repo_version[ansible_facts['distribution'] +
+      ' ' + ansible_facts['distribution_version']] }}
+    mode: "0644"
+  when: not tailscale_repo.stat.exists
+
+- name: Update apt cache after adding Tailscale repo
+  ansible.builtin.apt:
+    update_cache: true
+  when: not tailscale_repo.stat.exists
+
+- name: Install Tailscale
+  ansible.builtin.package:
+    name: tailscale
+    state: present
+
+- name: Make sure a Tailscale is running
+  ansible.builtin.systemd_service:
+    state: started
+    name: tailscaled
+
+- name: Check Tailscale status
+  ansible.builtin.command:
+    cmd: tailscale status
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+
+- name: Log Tailscale
+  ansible.builtin.command:
+    cmd: "tailscale up --auth-key={{ tailscale_key }}"
+  when: tailscale_status.rc != 0
+  no_log: true
+
+- name: Remove DNS settings from Tailscale
+  ansible.builtin.command:
+    cmd: "tailscale set --accept-dns=false"
+  when: tailscale_status.rc != 0

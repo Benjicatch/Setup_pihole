@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MIT-0
+---
+# defaults file for ansible/roles/tailscale_installation
+version:
+  "Ubuntu 26.04": "ubuntu/resolute.noarmor.gpg"
+  "Ubuntu 25.10": "ubuntu/questing.noarmor.gpg"
+  "Ubuntu 25.04": "ubuntu/plucky.noarmor.gpg"
+  "Ubuntu 24.10": "ubuntu/oracular.noarmor.gpg"
+  "Ubuntu 24.04": "ubuntu/noble.noarmor.gpg"
+  "Ubuntu 23.10": "ubuntu/minotaur.noarmor.gpg"
+  "Ubuntu 23.04": "ubuntu/lunar.noarmor.gpg"
+  "Ubuntu 22.10": "ubuntu/kinetic.noarmor.gpg"
+  "Ubuntu 22.04": "ubuntu/jammy.noarmor.gpg"
+  "Ubuntu 21.10": "ubuntu/impish.noarmor.gpg"
+  "Ubuntu 21.04": "ubuntu/hirsute.noarmor.gpg"
+  "Ubuntu 20.10": "ubuntu/groovy.noarmor.gpg"
+  "Ubuntu 20.04": "ubuntu/focal.noarmor.gpg"
+  "Ubuntu 19.10": "ubuntu/eoan.asc"
+  "Ubuntu 18.04": "ubuntu/bionic.asc"
+  "Ubuntu 16.04": "ubuntu/xenial.asc"
+
+repo_version:
+  "Ubuntu 26.04": "ubuntu/resolute.tailscale-keyring.list"
+  "Ubuntu 25.10": "ubuntu/questing.tailscale-keyring.list"
+  "Ubuntu 25.04": "ubuntu/plucky.tailscale-keyring.list"
+  "Ubuntu 24.10": "ubuntu/oracular.tailscale-keyring.list"
+  "Ubuntu 24.04": "ubuntu/noble.tailscale-keyring.list"
+  "Ubuntu 23.10": "ubuntu/minotaur.tailscale-keyring.list"
+  "Ubuntu 23.04": "ubuntu/lunar.tailscale-keyring.list"
+  "Ubuntu 22.10": "ubuntu/kinetic.tailscale-keyring.list"
+  "Ubuntu 22.04": "ubuntu/jammy.tailscale-keyring.list"
+  "Ubuntu 21.10": "ubuntu/impish.tailscale-keyring.list"
+  "Ubuntu 21.04": "ubuntu/hirsute.tailscale-keyring.list"
+  "Ubuntu 20.10": "ubuntu/groovy.tailscale-keyring.list"
+  "Ubuntu 20.04": "ubuntu/focal.tailscale-keyring.list"
+  "Ubuntu 19.10": "ubuntu/eoan.list"
+  "Ubuntu 18.04": "ubuntu/bionic.list"
+  "Ubuntu 16.04": "ubuntu/xenial.list"
