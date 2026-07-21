@@ -26,8 +26,5 @@ jobs:
       - name: Run YAML Lint
         run: yamllint -c .yamllint .
 
-      - name: Create vault password file and run Ansible Lint
-        run: |
-          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass
-          chmod 600 .vault_pass
-          ANSIBLE_VAULT_PASSWORD_FILE=.vault_pass ansible-lint
+      - name: Run Ansible Lint
+        run: ansible-lint
