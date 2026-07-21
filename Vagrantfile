@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
   config.vm.provision "file", source: ".vault_password", destination: "$HOME/.vault_password"
   config.vm.provision "shell", name: "install-dependencies", path: "install-dependencies.sh"
+  config.vm.provision "shell", name: "install-project", path: "install-project.sh"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
