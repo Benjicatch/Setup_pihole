@@ -32,6 +32,4 @@ jobs:
           chmod 600 .vault_pass
 
       - name: Run Ansible Lint
-        env:
-          ANSIBLE_VAULT_PASSWORD_FILE: .vault_pass
-        run: ansible-lint
+        run: ANSIBLE_VAULT_PASSWORD_FILE=.vault_pass ansible-lint
