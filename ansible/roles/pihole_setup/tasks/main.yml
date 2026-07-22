@@ -29,3 +29,14 @@
         - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/rpz/pro.txt"
       enabled: true
     status_code: [200, 201]
+
+
+- name: Install blocklists
+  ansible.builtin.uri:
+    url: "http://localhost:80/api/action/gravity"
+    method: POST
+    headers:
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      password: "{{ pihole_password }}"
