@@ -15,11 +15,11 @@
 
 - name: Add blocklist
   ansible.builtin.uri:
-    url: "http://localhost:80/api/lists"
+    url: "http://localhost:80/api/lists?type=block"
     method: POST
     headers:
       sid: "{{ pihole_auth.json.session.sid }}"
     body_format: json
     body:
       address: https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt
-      type: block
+      enabled: true
