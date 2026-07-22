@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible/roles/pihole_setup
+- name: Authenticate to Pi-hole API
+  ansible.builtin.uri:
+    url: "http://localhost/api/auth"
+    method: POST
+    headers:
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      password: "{{ pihole_password }}"
+    return_content: true
+  register: pihole_auth
+
+- name: Add blocklist
+  ansible.builtin.uri:
+    url: "http://localhost/api/lists"
+    method: POST
+    headers:
+      sid: "{{ pihole_auth.json.session.sid }}"
+    body_format: json
+    body:
+      address: https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt
+      type: block

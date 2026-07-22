@@ -9,3 +9,4 @@
     - docker_installation
     - tailscale_installation
     - pihole_installation
+    - pihole_setup
