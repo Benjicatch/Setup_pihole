@@ -35,7 +35,4 @@
     url: "http://localhost:80/api/action/gravity"
     method: POST
     headers:
-      Content-Type: "application/json"
-    body_format: json
-    body:
-      password: "{{ pihole_password }}"
+      sid: "{{ pihole_auth.json.session.sid }}"
