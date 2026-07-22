@@ -13,30 +13,30 @@
     - ~/pihole/etc-pihole
     - ~/pihole/etc-dnsmasq.d
 
-# - name: Disable systemd-resolved
-#   ansible.builtin.systemd:
-#     name: systemd-resolved
-#     state: stopped
-#     enabled: false
+- name: Disable systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
 
-# - name: Remove resolv.conf symlink
-#   ansible.builtin.file:
-#     path: /etc/resolv.conf
-#     state: absent
+- name: Remove resolv.conf symlink
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
 
-# - name: Create static resolv.conf
-#   ansible.builtin.copy:
-#     dest: /etc/resolv.conf
-#     content: |
-#       nameserver 1.1.1.1
-#       nameserver 8.8.8.8
+- name: Create static resolv.conf
+  ansible.builtin.copy:
+    dest: /etc/resolv.conf
+    content: |
+      nameserver 1.1.1.1
+      nameserver 8.8.8.8
 
-# - name: Disable dnsmasq if installed
-#   ansible.builtin.systemd:
-#     name: dnsmasq
-#     state: stopped
-#     enabled: false
-#   when: "'dnsmasq.service' in ansible_facts.services"
+- name: Disable dnsmasq if installed
+  ansible.builtin.systemd:
+    name: dnsmasq
+    state: stopped
+    enabled: false
+  when: "'dnsmasq.service' in ansible_facts.services"
 
 - name: Copy docker compose of Pi-Hole
   ansible.builtin.template:
