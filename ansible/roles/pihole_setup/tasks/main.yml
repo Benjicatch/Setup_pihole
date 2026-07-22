@@ -3,7 +3,7 @@
 # tasks file for ansible/roles/pihole_setup
 - name: Authenticate to Pi-hole API
   ansible.builtin.uri:
-    url: "http://localhost/api/auth"
+    url: "http://localhost:80/api/auth"
     method: POST
     headers:
       Content-Type: "application/json"
