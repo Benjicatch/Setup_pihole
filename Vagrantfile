@@ -14,6 +14,11 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "generic/ubuntu2204"
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+
   # Install dependencies
   config.ssh.forward_agent = true
   config.vm.provision "file", source: ".vault_password", destination: "$HOME/.vault_password"

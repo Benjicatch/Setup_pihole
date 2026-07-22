@@ -51,8 +51,3 @@
     state: present
   register: output
   when: file_copy_result.changed
-
-- name: Show results
-  ansible.builtin.debug:
-    var: output
-  when: file_copy_result.changed
