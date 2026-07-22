@@ -15,7 +15,7 @@
 
 - name: Add blocklist
   ansible.builtin.uri:
-    url: "http://localhost/api/lists"
+    url: "http://localhost:80/api/lists"
     method: POST
     headers:
       sid: "{{ pihole_auth.json.session.sid }}"

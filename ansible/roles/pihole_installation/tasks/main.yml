@@ -51,3 +51,7 @@
     state: present
   register: output
   when: file_copy_result.changed
+
+- name: Wait for Pi-hole to be ready
+  ansible.builtin.wait_for:
+    timeout: 10
