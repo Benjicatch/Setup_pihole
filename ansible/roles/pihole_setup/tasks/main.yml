@@ -21,12 +21,7 @@
       sid: "{{ pihole_auth.json.session.sid }}"
     body_format: json
     body:
-      address:
-        - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
-        - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/pro.txt"
-        - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt"
-        - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro-onlydomains.txt"
-        - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/rpz/pro.txt"
+      address: "{{ block_lists }}"
       enabled: true
     status_code: [200, 201, 400]
 
