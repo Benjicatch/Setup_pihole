@@ -5,12 +5,17 @@
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: true
+  when: ansible_facts['pkg_mgr'] == 'apt'
+
+- name: Update dnf cache
+  ansible.builtin.dnf:
+    update_cache: true
+  when: ansible_facts['pkg_mgr'] == 'dnf'
 
 - name: Ensure python3-debian is installed (APT modules requirement)
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: python3-debian
     state: present
-    update_cache: true
 
 - name: Ensure dependencies are installed
   ansible.builtin.package:
@@ -55,6 +60,12 @@
 - name: Update apt cache after adding Docker repository
   ansible.builtin.apt:
     update_cache: true
+  when: ansible_facts['pkg_mgr'] == 'apt'
+
+- name: Update dnf cache after adding Docker repository
+  ansible.builtin.dnf:
+    update_cache: true
+  when: ansible_facts['pkg_mgr'] == 'dnf'
 
 - name: Install Docker and Docker Compose
   ansible.builtin.package:

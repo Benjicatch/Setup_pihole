@@ -2,11 +2,9 @@
 ---
 # tasks file for ansible/roles/tailscale_installation
 - name: Ensure python3-debian is installed (APT modules requirement)
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: python3-debian
     state: present
-    update_cache: true
-    cache_valid_time: 3600
 
 - name: Ensure dependencies are installed
   ansible.builtin.package:
@@ -49,7 +47,12 @@
 - name: Update apt cache after adding Tailscale repo
   ansible.builtin.apt:
     update_cache: true
-  when: not tailscale_repo.stat.exists
+  when: not tailscale_repo.stat.exists and ansible_facts['pkg_mgr'] == 'apt'
+
+- name: Update dnf cache after adding Tailscale repo
+  ansible.builtin.dnf:
+    update_cache: true
+  when: not tailscale_repo.stat.exists and ansible_facts['pkg_mgr'] == 'dnf'
 
 - name: Install Tailscale
   ansible.builtin.package:
